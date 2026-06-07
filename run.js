@@ -20,6 +20,8 @@ function log(...a) {
   fs.appendFileSync(logFile, line + '\n');
 }
 
+const sheetUrl = (id) => `https://docs.google.com/spreadsheets/d/${id}/edit`;
+
 async function runSite(site, auth, cfg) {
   log(`=== ${site}: scraping ===`);
   const { scrape } = SCRAPERS[site]();
@@ -38,8 +40,10 @@ async function runSite(site, auth, cfg) {
   });
   log(
     `${site}: synced -> inserted ${stats.inserted}, price-updated ${stats.updated}, ` +
-      `unchanged ${stats.unchanged}, orphans kept ${stats.orphans} (sheet ${spreadsheetId})`
+      `unchanged ${stats.unchanged}, orphans kept ${stats.orphans}`
   );
+  log(`${site}: your Google Sheet -> ${sheetUrl(spreadsheetId)}`);
+  return spreadsheetId;
 }
 
 async function main() {
@@ -53,12 +57,20 @@ async function main() {
   }
   const auth = getAuth();
   const cfg = loadConfig();
+  const links = [];
   for (const site of sites) {
     try {
-      await runSite(site, auth, cfg);
+      const id = await runSite(site, auth, cfg);
+      if (id) links.push([site, sheetUrl(id)]);
     } catch (e) {
       log(`${site}: ERROR ${e.stack || e.message}`);
     }
+  }
+  if (links.length) {
+    log('');
+    log('==================== YOUR GOOGLE SHEETS ====================');
+    for (const [site, url] of links) log(`  ${site}: ${url}`);
+    log('===========================================================');
   }
   log('done.');
 }
