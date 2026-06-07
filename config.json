@@ -1,0 +1,8 @@
+{
+  "sheetTab": "prices",
+  "schedule": "0 18 * * *",
+  "sheets": {
+    "rental-ninja": { "title": "Rental Ninja Pricing Tracker" },
+    "lodgify": { "title": "Lodgify Pricing Tracker" }
+  }
+}

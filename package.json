@@ -1,0 +1,26 @@
+{
+  "name": "pricing-tracker",
+  "version": "1.0.0",
+  "description": "Portable daily tracker that scrapes Rental Ninja and Lodgify pricing across every condition into your own Google Sheets.",
+  "main": "run.js",
+  "scripts": {
+    "setup": "node setup.js",
+    "auth": "node auth.js",
+    "scrape": "node run.js",
+    "scrape:rental-ninja": "node run.js rental-ninja",
+    "scrape:lodgify": "node run.js lodgify",
+    "daemon": "node scheduler.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "googleapis": "^173.0.0",
+    "node-cron": "^4.2.1",
+    "playwright": "^1.60.0"
+  }
+}

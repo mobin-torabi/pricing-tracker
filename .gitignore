@@ -1,0 +1,13 @@
+# dependencies
+node_modules/
+
+# secrets / personal (NEVER commit) — public repo: each user supplies their own
+credentials/oauth_client.json
+credentials/token.json
+*.token.json
+config.local.json
+logs/
+
+# scratch
+debug/
+*.tmp
